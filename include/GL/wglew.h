@@ -65,10 +65,14 @@
 
 #if !defined(WINAPI)
 #  ifndef WIN32_LEAN_AND_MEAN
-#    define WIN32_LEAN_AND_MEAN 1
+#    define WIN32_LEAN_AND_MEAN
+#    define GLEW_DEFINED_WIN32_LEAN_AND_MEAN
 #  endif
 #include <windows.h>
-#  undef WIN32_LEAN_AND_MEAN
+#  ifdef GLEW_DEFINED_WIN32_LEAN_AND_MEAN
+#    undef WIN32_LEAN_AND_MEAN
+#    undef GLEW_DEFINED_WIN32_LEAN_AND_MEAN
+#  endif
 #endif
 
 /*
