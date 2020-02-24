@@ -12,6 +12,31 @@ https://github.com/nigels-com/glew
 [![Gitter](https://badges.gitter.im/nigels-com/glew.svg)](https://gitter.im/nigels-com/glew?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Download](https://img.shields.io/sourceforge/dm/glew.svg)](https://sourceforge.net/projects/glew/files/latest/download)
 
+## Table of Contents
+
+* [Downloads](#downloads)
+	* [Recent snapshots](#recent-snapshots)
+* [Build](#build)
+	* [Linux and Mac](#linux-and-mac)
+		* [Using GNU Make](#using-gnu-make)
+		* [Install build tools](#install-build-tools)
+		* [Build](#build-1)
+		* [Linux EGL](#linux-egl)
+		* [Linux OSMesa](#linux-osmesa)
+		* [Linux mingw-w64](#linux-mingw-w64)
+	* [Using cmake](#using-cmake)
+		* [Install build tools](#install-build-tools-1)
+		* [Build](#build-2)
+	* [Windows](#windows)
+		* [Visual Studio](#visual-studio)
+		* [MSYS/Mingw](#msysmingw)
+		* [MSYS2/Mingw-w64](#msys2mingw-w64)
+* [glewinfo](#glewinfo)
+* [Code Generation](#code-generation)
+* [Authors](#authors)
+* [Contributions](#contributions)
+* [Copyright and Licensing](#copyright-and-licensing)
+
 ## Downloads
 
 Current release is [2.1.0](https://sourceforge.net/projects/glew/files/glew/2.1.0/).
@@ -27,17 +52,23 @@ Windows binaries for [32-bit and 64-bit](https://sourceforge.net/projects/glew/f
 
 Snapshots may contain new features, bug-fixes or new OpenGL extensions ahead of tested, official releases.
 
-[glew-20181010.tgz](https://sourceforge.net/projects/glew/files/glew/snapshots/glew-20181010.tgz/download) *GLEW 2.2.0 RC1: New extensions, bug fixes*
+[glew-20200115.tgz](https://sourceforge.net/projects/glew/files/glew/snapshots/glew-20200115.tgz/download) *GLEW 2.2.0 RC3: fixes*
+
+[glew-20190928.tgz](https://sourceforge.net/projects/glew/files/glew/snapshots/glew-20190928.tgz/download) *GLEW 2.2.0 RC2: New extensions, bug fixes*
 
 ## Build
 
 It is highly recommended to build from a tgz or zip release snapshot.
 The code generation workflow is a complex brew of gnu make, perl and python, that works best on Linux or Mac.
+The code generation is known to work on Windows using [MSYS2](https://www.msys2.org/).
 For most end-users of GLEW the official releases are the best choice, with first class support.
 
 ### Linux and Mac
 
 #### Using GNU Make
+
+GNU make is the primary build system for GLEW, historically.
+It includes targets for building the sources and headers, for maintenance purposes.
 
 ##### Install build tools
 
@@ -76,6 +107,10 @@ _Note: you may need to call `make` in the  **auto** folder first_
 	$ make SYSTEM=linux-mingw64
 
 #### Using cmake
+
+The cmake build is mostly contributer maintained.
+Due to the multitude of use cases this is maintained on a _best effort_ basis.
+Pull requests are welcome.
 
 *CMake 2.8.12 or higher is required.*
 
@@ -134,7 +169,7 @@ Available from [Msys2](http://msys2.github.io/) and/or [Mingw-w64](http://mingw-
 
 Requirements: bash, make, gcc
 
-	$ pacman -S gcc make  mingw-w64-i686-gcc mingw-w64-x86_64-gcc
+	$ pacman -S gcc make mingw-w64-i686-gcc mingw-w64-x86_64-gcc
 	$ make
 	$ make install
 	$ make install.all
@@ -181,10 +216,6 @@ download a pre-generated (unsupported) snapshot:
 
 https://sourceforge.net/projects/glew/files/glew/snapshots/
 
-Travis-built snapshots are also available:
-
-https://glew.s3.amazonaws.com/index.html
-
 ## Authors
 
 GLEW is currently maintained by [Nigel Stewart](https://github.com/nigels-com)
@@ -211,7 +242,7 @@ Be sure to mention platform and compiler toolchain details when filing
 a bug report.  The output of `glewinfo` can be quite useful for discussion
 also.
 
-Generally GLEW is released once a year, around the time of the Siggraph
+Generally GLEW is usually released once a year, around the time of the Siggraph
 computer graphics conference.  If you're not using the current release
 version of GLEW, be sure to check if the issue or bug is fixed there.
 
