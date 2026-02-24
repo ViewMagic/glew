@@ -1,10 +1,10 @@
+cmake_minimum_required (VERSION 3.5)
+
 if ( NOT DEFINED CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Release CACHE STRING "Build type" )
 endif ()
 
 project (glew C)
-
-cmake_minimum_required (VERSION 2.8.12)
 
 include(GNUInstallDirs)
 
@@ -115,7 +115,9 @@ if (MSVC)
   # add options from visual studio project
   target_compile_definitions (glew PRIVATE "GLEW_BUILD;VC_EXTRALEAN")
   target_compile_definitions (glew_s PRIVATE "GLEW_STATIC;VC_EXTRALEAN")
-  target_link_libraries (glew LINK_PRIVATE -BASE:0x62AA0000)
+  if (NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+    target_link_libraries (glew LINK_PRIVATE -BASE:0x62AA0000)
+  endif ()
   # kill security checks which are dependent on stdlib
   target_compile_options (glew PRIVATE -GS-)
   target_compile_options (glew_s PRIVATE -GS-)
@@ -148,15 +150,11 @@ endif()
 target_link_libraries (glew LINK_PUBLIC ${GLEW_LIBRARIES})
 target_link_libraries (glew_s ${GLEW_LIBRARIES})
 
-if(CMAKE_VERSION VERSION_LESS 2.8.12)
-  set(MAYBE_EXPORT "")
-else()
-  target_compile_definitions(glew_s INTERFACE "GLEW_STATIC")
-  foreach(t glew glew_s)
-    target_include_directories(${t} PUBLIC $<INSTALL_INTERFACE:include>)
-  endforeach()
-  set(MAYBE_EXPORT EXPORT glew-targets)
-endif()
+target_compile_definitions(glew_s INTERFACE "GLEW_STATIC")
+foreach(t glew glew_s)
+  target_include_directories(${t} PUBLIC $<INSTALL_INTERFACE:include>)
+endforeach()
+set(MAYBE_EXPORT EXPORT glew-targets)
 
 set(targets_to_install "")
 if(NOT DEFINED BUILD_SHARED_LIBS OR BUILD_SHARED_LIBS)
